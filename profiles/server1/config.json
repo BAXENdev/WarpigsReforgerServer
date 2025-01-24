@@ -1,13 +1,13 @@
 {
 	"publicAddress": "1.2.3.4",
-	"publicPort": 2001,
+	"publicPort": 19001,
 	"a2s": {
-		"address": "1.2.3.4",
-		"port": 17777
+		"address": "0.0.0.0",
+		"port": 19011
 	},
 	"rcon": {
-		"address": "1.2.3.4",
-		"port": 19999,
+		"address": "0.0.0.0",
+		"port": 19021,
 		"permission": "monitor",
 		"password": "Testing"
 	},

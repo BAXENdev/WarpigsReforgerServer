@@ -2,6 +2,8 @@
 
 Made on `debian12`
 
+Current issue: must use host networking because port mapping blocks something for the server?
+
 ## Server Setup
 
 ### Update repo
@@ -21,17 +23,16 @@ sudo apt-get upgrade
 ### Setup armaServer User
 Create armaServer user
 ```sh
-sudo adduser --system armaServer
+sudo adduser --allow-bad-names armaServer
 sudo usermod -aG sudo armaServer
-sudo passwd armaServer
 ```
 
 **Logout and login into armaServer**
 Download git repo
 ```sh
 cd
-apt install git
-git clone https://github.com/BAXENdev/WarpigsReforgerServer /home/armaServer/armaReforgerServer
+sudo apt install git
+sudo git clone https://github.com/BAXENdev/WarpigsReforgerServer /home/armaServer/armaReforgerServer
 ```
 
 ### Install Docker
@@ -100,7 +101,38 @@ echo "alias updateArma='steamcmd +login anonymous +app_update 1874900 validate +
 | startServer | Starts the arma servers listed in the docker compose |
 | stopServer | Stops the arma servers |
 | modifyCompose | Open the docker compose file that lists the arma server |
-| updateArma | Updates the arma server files |
+| updateArma | Updates the arma server files. when running this command, make sure to sign into armaServer |
+
+### Modify the Profile Config
+```sh
+sudo nano /home/armaServer/armaReforgerServer/profiles/server1/config.json
+```
+* Change ip address for `publicAddress`
+* Increment the ports
+* Set the server name
+* Set the admin password
+* Set the scenarioId ([missions](https://community.bistudio.com/wiki?title=Arma_Reforger:Server_Config#scenarioId))
+* Update or remove the rcon info
+
+If you would like to change the folder name of the profile:
+```sh
+cd /home/armaServer/armaReforgerServer/profiles
+mv server1 newProfileName
+sudo nano /home/armaServer/armaReforgerServer/docker/Servers/docker-compose.yaml
+```
+* Update `server1` to your new profile name in the second volume listing
+```yaml
+# In the second listing, change server1 to your new profile name
+    volumes:
+      - /home/armaServer/armaReforgerServer/workshop:/home/reforger/workshop
+      - /home/armaServer/armaReforgerServer/profiles/server1:/home/reforger/profile
+      - /home/armaServer/.steam/steam/steamapps/common/Arma\ Reforger\ Server:/home/reforger/gameFiles
+# to 
+    volumes:
+      - /home/armaServer/armaReforgerServer/workshop:/home/reforger/workshop
+      - /home/armaServer/armaReforgerServer/profiles/newProfileName:/home/reforger/profile
+      - /home/armaServer/.steam/steam/steamapps/common/Arma\ Reforger\ Server:/home/reforger/gameFiles
+```
 
 ## Creating a New Server Instance
 
