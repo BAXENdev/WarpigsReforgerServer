@@ -1,0 +1,27 @@
+{
+	"publicAddress": "51.222.244.193",
+	"publicPort": 2001,
+	"a2s": {
+		"address": "51.222.244.193",
+		"port": 17777
+	},
+	"rcon": {
+		"address": "51.222.244.193",
+		"port": 19999,
+		"permission": "monitor",
+		"password": "AdminAdmin"
+	},
+	"game": {
+		"name": "Test Server",
+		"password": "",
+		"passwordAdmin": "AdminAdmin",
+		"scenarioId": "{C700DB41F0C546E1}Missions/23_Campaign_NorthCentral.conf",
+		"maxPlayers": 64,
+		"supportedPlatforms": [
+			"PLATFORM_PC",
+			"PLATFORM_XBL",
+			"PLATFORM_PSN"
+		],
+		"mods": []
+	}
+}
