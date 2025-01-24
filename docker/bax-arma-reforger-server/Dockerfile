@@ -1,7 +1,7 @@
 
 FROM debian:bullseye-slim
 RUN apt-get update \
- && apt-get install -y --no-install-recommends --no-install-suggests lib32stc++6 lib32gcc-s1 ca-certificates libcurl4 net-tools libssl1.1 \
+ && apt-get install -y --no-install-recommends --no-install-suggests lib32stdc++6 lib32gcc-s1 ca-certificates libcurl4 net-tools libssl1.1 \
  && apt-get remove --purge -y \
  && apt-get clean autoclean \
  && apt-get autoremove -y

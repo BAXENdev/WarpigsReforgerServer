@@ -2,16 +2,17 @@ services:
   # server1
   #copy this to create more servers and rerun launchServer
   server1: # change this
-    image: baxArmaReforgerServer # change if you have your own image
+    image: bax-arma-reforger-server # change if you have your own image
     platform: linux/amd64 # change this if the cpu changes from amd
     container_name: arma-reforger-server1 # change this
     ports:
-      - "2001:2001/udp" # public port : change left value
-      - "18001:17777/udp" # a2s port : change left value
-      - "18101:19999/udp" # rcon port : change left value
+      # hosted servers dont like 2000 ports?
+      - "19001:2001/udp" # public port : change left value
+      - "19101:17777/udp" # a2s port : change left value
+      - "19201:19999/udp" # rcon port : change left value
     volumes:
       - /home/armaServer/armaReforgerServer/workshop:/home/reforger/workshop
-      - /home/steam/armaReforgerServer/profiles/bax_na1:/home/reforger/profile
-      - /home/armaServer/.steam/steam/steamapps/common/ArmaReforgerServer:/home/reforger/binary
+      - /home/armaServer/armaReforgerServer/profiles/server1:/home/reforger/profile
+      - /home/armaServer/.steam/steam/steamapps/common/Arma\ Reforger\ Server:/home/reforger/gameFiles
     restart: unless-stopped # server container will not restart if container is manually stopped
     network_mode: bridge

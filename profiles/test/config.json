@@ -1,12 +1,12 @@
 {
-	"publicAddress": "51.222.244.193",
+	"publicAddress": "1.2.3.4",
 	"publicPort": 2001,
 	"a2s": {
-		"address": "51.222.244.193",
+		"address": "1.2.3.4",
 		"port": 17777
 	},
 	"rcon": {
-		"address": "51.222.244.193",
+		"address": "1.2.3.4",
 		"port": 19999,
 		"permission": "monitor",
 		"password": "AdminAdmin"
