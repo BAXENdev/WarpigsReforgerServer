@@ -7,7 +7,7 @@ Made on `debian12`
 ### Setup armaServer User
 ```sh
 # Create armaServer user
-sudo sudo usermod -aG sudo armaServer
+sudo usermod -aG sudo armaServer
 # Set its password (required)
 sudo passwd armaServer
 
