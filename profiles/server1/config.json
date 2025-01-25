@@ -15,6 +15,7 @@
 		"name": "Server Name",
 		"password": "",
 		"passwordAdmin": "GameMasterPassword",
+		"admins": [],
 		"scenarioId": "{C700DB41F0C546E1}Missions/23_Campaign.conf",
 		"maxPlayers": 100,
 		"supportedPlatforms": [
@@ -22,6 +23,22 @@
 			"PLATFORM_XBL",
 			"PLATFORM_PSN"
 		],
-		"mods": []
+		"mods": [],
+		"gameProperties": {
+			"serverMaxViewDistance": 1200,
+			"serverMinGrassDistance": 50,
+			"networkViewDistance": 1400,
+			"disableThirdPerson": false,
+			"fastValidation": true,
+			"battlEye": true,
+			"VONDisableUI": false,
+			"VONDisableDirectSpeechUI": false,
+			"VONCanTransmitCrossFaction": false
+		}
+	},
+	"operating": {
+		"joinQueue": {
+			"maxSize": 40
+		}
 	}
 }
