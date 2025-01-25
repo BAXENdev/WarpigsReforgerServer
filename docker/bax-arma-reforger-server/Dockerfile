@@ -5,10 +5,12 @@ RUN apt-get update \
  && apt-get remove --purge -y \
  && apt-get clean autoclean \
  && apt-get autoremove -y
-CMD /home/reforger/gameFiles/ArmaReforgerServer \
- -profile /home/reforger/profile \
- -config /home/reforger/profile/config.json \
- -addonsDir /home/reforger/gameFiles/addons,/home/reforger/workshop/addons \
- -addonDownloadDir /home/reforger/workshop \
- -maxFPS 60 -backendlog -nothrow
+ENTRYPOINT [ "/home/reforger/gameFiles/ArmaReforgerServer" ]
+CMD [ \
+ "-profile", "/home/reforger/profile", \
+ "-config", "/home/reforger/profile/config.json", \
+ "-addonsDir", "/home/reforger/gameFiles/addons,/home/reforger/workshop/addons", \
+ "-addonDownloadDir", "/home/reforger/workshop", \
+ "-maxFPS 60 -backendlog -nothrow -rplEncodeAsLongJobs" \
+]
 STOPSIGNAL SIGINT

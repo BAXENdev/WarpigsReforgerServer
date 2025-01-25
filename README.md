@@ -80,11 +80,18 @@ steamcmd +login anonymous +app_update 1874900 validate +exit
 ```
 
 ### Update Firewall
+Use either option to open the firewall
+Make sure to open the ports on the server firewall it present
 ```sh
-sudo iptables -A INPUT -p udp --dport 19001:19060 -j ACCEPT 
-sudo iptables -A OUTPUT -p udp --dport 19001:19060 -j ACCEPT 
-sudo iptables -A DOCKER-USER -p udp --dport 19001:19060 -j ACCEPT 
-sudo iptables -A DOCKER -p udp --dport 19001:19060 -j ACCEPT 
+# Specific ports, change as needed
+sudo iptables -A INPUT -p udp -m multiport --dports 2001,17777,19999 -j ACCEPT
+sudo iptables -A OUTPUT -p udp -m multiport --dports 2001,17777,19999 -j ACCEPT
+sudo iptables -A DOCKER-USER -p udp -m multiport --dports 2001,17777,19999 -j ACCEPT
+
+# Port ranges, change as needed
+sudo iptables -A INPUT -p udp --dport 18000:18100 -j ACCEPT 
+sudo iptables -A OUTPUT -p udp --dport 18000:18100 -j ACCEPT 
+sudo iptables -A DOCKER-USER -p udp --dport 18000:18100 -j ACCEPT 
 ```
 
 ### Add Server Commands

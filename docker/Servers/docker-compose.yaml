@@ -4,17 +4,17 @@ services:
   server1: # change this
     image: bax-arma-reforger-server # change if you have your own image
     platform: linux/amd64 # change this if the cpu changes from amd
-    container_name: arma-reforger-server1 # change this
-    # Port mapping breaks the server?
+    container_name: arma-reforger-server1 # change this. Server should be "arma-reforger-[container name]" for restart service to detect
+    # Port mapping breaks the server? use host networking instead
     # ports:
     #   # hosted servers dont like 2000 ports?
-    #   - "19001:2001/udp" # public port : change left value
-    #   - "19011:17777/udp" # a2s port : change left value
+    #   - "2001:2001/udp" # public port : change left value
+    #   - "17777:17777/udp" # a2s port : change left value
     #   - "19021:19999/udp" # rcon port : change left value
     volumes:
       - /home/armaServer/armaReforgerServer/workshop:/home/reforger/workshop
       - /home/armaServer/armaReforgerServer/profiles/server1:/home/reforger/profile
-      - /home/armaServer/.steam/steam/steamapps/common/Arma\ Reforger\ Server:/home/reforger/gameFiles
+      - /home/armaServer/.steam/steam/steamapps/common/Arma Reforger Server:/home/reforger/gameFiles
     restart: unless-stopped # server container will not restart if container is manually stopped
     # network_mode: bridge
     network_mode: host
