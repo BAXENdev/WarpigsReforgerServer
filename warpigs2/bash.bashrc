@@ -1,0 +1,6 @@
+alias ArmaReforgerServer="\"/home/bax/.steam/steam/steamapps/common/Arma Reforger Server/ArmaReforgerServer\""
+alias reboot="sudo systemctl reboot"
+alias aptUpdate="sudo apt update; sudo apt upgrade; sudo apt-get update; sudo apt-get upgrade"
+alias modifyCompose="sudo nano /home/steam/arma_reforger_server/dockerfiles/Bax_ReforgerServer/docker-compose.yaml"
+alias startServer="sudo docker compose -f /home/steam/arma_reforger_server/dockerfiles/Bax_ReforgerServer/docker-compose.yaml up -d"
+alias stopServer="sudo docker compose -f /home/steam/arma_reforger_server/dockerfiles/Bax_ReforgerServer/docker-compose.yaml down"

@@ -1,0 +1,195 @@
+{
+    "bindAddress": "0.0.0.0",
+    "bindPort": 19690,
+    "publicAddress": "74.112.76.20",
+    "publicPort": 19690,
+    "game": {
+        "name": "WARPIGS 24/7 TACTICS & TEAMWORK | NEW PLAYERS WELCOME l https://discord.gg/bqEd4rfS5m",
+        "password": "",
+        "passwordAdmin": "I9xBoht4prfLlbTr",
+        "scenarioId": "{ECC61978EDCC2B5A}Missions/23_Campaign.conf",
+        "maxPlayers": 100,
+        "visible": true,
+        "supportedPlatforms": [
+            "PLATFORM_PC",
+            "PLATFORM_XBL",
+            "PLATFORM_PSN"
+        ],
+        "gameProperties": {
+            "serverMaxViewDistance": 500,
+            "serverMinGrassDistance": 50,
+            "networkViewDistance": 1200,
+            "disableThirdPerson": false,
+            "fastValidation": true,
+            "battlEye": true,
+            "VONDisableUI": false,
+            "VONDisableDirectSpeechUI": false,
+            "VONCanTransmitCrossFaction": false,
+            "missionHeader": {
+                "m_iControlPointsCap": 1,
+                "m_fVictoryTimeout": 3000,
+                "m_iStartingHQSupplies": 2000,
+                "m_iMinimumBaseSupplies": 1000,
+                "m_iMaximumBaseSupplies": 1000,
+                "m_bCustomBaseWhitelist": 1,
+                "m_bIgnoreMinimumVehicleRank": 1,
+                "m_aCampaignCustomBaseList": [
+					{
+						"m_sBaseName": "MilitaryBaseAirfield",
+						"m_bCanBeHQ": 1,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "MainBaseSouth",
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "MainBaseNorth",
+						"m_bIsControlPoint": 0,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "MajorBaseChotain",
+						"m_bIsControlPoint": 1,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "MajorBaseLamentin",
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "MajorBaseMorton",
+						"m_bIsControlPoint": 1,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "MilitaryBaseLevie",
+						"m_bIsControlPoint": 1,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "MilitaryBaseVilleneuf",
+						"m_bIsControlPoint": 1,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "MilitaryHospital",
+						"m_bIsControlPoint": 1,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "SmallBaseAndresBeacon"
+					},
+					{
+						"m_sBaseName": "SmallBaseBlackLake"
+					},
+					{
+						"m_sBaseName": "SmallBaseGoatbay"
+					},
+					{
+						"m_sBaseName": "SmallBaseHornbeamValley"
+					},
+					{
+						"m_sBaseName": "SmallBaseLake"
+					},
+					{
+						"m_sBaseName": "SmallBaseMaidensBay"
+					},
+					{
+						"m_sBaseName": "SmallBaseMine",
+						"m_fRadioRange": 2000
+					},
+					{
+						"m_sBaseName": "SmallBasePennantsPass",
+						"m_bCanBeHQ": 1,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "SmallBaseRichemont"
+					},
+					{
+						"m_sBaseName": "SmallBaseShepherds"
+					},
+					{
+						"m_sBaseName": "SmallBaseSimonsWood"
+					},
+					{
+						"m_sBaseName": "SmallBase"
+					},
+					{
+						"m_sBaseName": "TillersFind"
+					},
+					{
+						"m_sBaseName": "TownBaseChotain"
+					},
+					{
+						"m_sBaseName": "TownBaseDuras",
+						"m_fRadioRange": 1800
+					},
+					{
+						"m_sBaseName": "TownBaseEntre_Deux"
+					},
+					{
+						"m_sBaseName": "TownBaseFigari"
+					},
+					{
+						"m_sBaseName": "TownBaseGravette"
+					},
+					{
+						"m_sBaseName": "TownBaseKermovan"
+					},
+					{
+						"m_sBaseName": "TownBaseLaruns"
+					},
+					{
+						"m_sBaseName": "TownBaseLe_Moule"
+					},
+					{
+						"m_sBaseName": "TownBaseLevie"
+					},
+					{
+						"m_sBaseName": "TownBaseMeaux"
+					},
+					{
+						"m_sBaseName": "TownBaseMontignac",
+						"m_bIsControlPoint": 1,
+						"m_bIsSupplyHub": 1
+					},
+					{
+						"m_sBaseName": "TownBaseProvins"
+					},
+					{
+						"m_sBaseName": "TownBaseRegina"
+					},
+					{
+						"m_sBaseName": "TownBaseTyrone"
+					},
+					{
+						"m_sBaseName": "TownBaseVernon"
+					},
+					{
+						"m_sBaseName": "TownBaseVileneuf"
+					}
+				]
+            }
+        },
+        "mods": []
+    },
+    "a2s": {
+        "address": "0.0.0.0",
+        "port": 19691
+    },
+    "rcon": {
+        "address": "0.0.0.0",
+        "port": 19999,
+        "password": "Warpigs1245",
+        "permission": "admin",
+        "blacklist": [],
+        "whitelist": []
+    },
+    "operating": {
+        "joinQueue": {
+            "maxSize": 20
+        }
+    }
+}

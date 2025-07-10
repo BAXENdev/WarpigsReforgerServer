@@ -1,0 +1,54 @@
+{
+	"publicAddress": "local",
+	"publicPort": 2001,
+	"game": {
+		"name": "test",
+		"password": "",
+		"passwordAdmin": "test",
+		"scenarioId": "{ECC61978EDCC2B5A}Missions/23_Campaign.conf",
+		"maxPlayers": 80,
+		"visible": true,
+		"supportedPlatforms": [
+			"PLATFORM_PC",
+			"PLATFORM_XBL",
+			"PLATFORM_PSN"
+		],
+		"gameProperties": {
+			"serverMaxViewDistance": 500,
+			"serverMinGrassDistance": 50,
+			"networkViewDistance": 1500,
+			"disableThirdPerson": true,
+			"fastValidation": true,
+			"battlEye": true,
+			"VONDisableUI": false,
+			"VONDisableDirectSpeechUI": false,
+			"VONCanTransmitCrossFaction": false,
+			"missionHeader": {
+				"m_fVictoryTimeout": 3000,
+				"m_iStartingHQSupplies": 2000,
+				"m_iMinimumBaseSupplies": 1000,
+				"m_iMaximumBaseSupplies": 1000,
+				"m_bIgnoreMinimumVehicleRank": 1
+			}
+		},
+		"mods": [
+			{
+				"modId": "595F2BF2F44836FB",
+				"name": "RHS-StatusQuo"
+			},
+			{
+				"modId": "1337C0DE5DABBEEF",
+				"name": "RHS-ContentPack01"
+			},
+			{
+				"modId": "BADC0DEDABBEDA5E",
+				"name": "RHS-ContentPack02"
+			}, bgh
+		]
+	},
+	"operating": {
+		"joinQueue": {
+			"maxSize": 20
+		}
+	}
+}

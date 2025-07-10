@@ -1,0 +1,79 @@
+{
+    "bindAddress": "0.0.0.0",
+    "bindPort": 19690,
+    "publicAddress": "74.112.76.20",
+    "publicPort": 19690,
+    "game": {
+      "name": "WARPIGS 24/7 TACTICS & TEAMWORK | NEW PLAYERS WELCOME l https://discord.gg/h7vty7CUqE",
+      "password": "",
+      "passwordAdmin": "I9xBoht4prfLlbTr",
+      "scenarioId": "{ECC61978EDCC2B5A}Missions/23_Campaign.conf",
+      "maxPlayers": 80,
+      "visible": true,
+      "supportedPlatforms": [
+        "PLATFORM_PC",
+        "PLATFORM_XBL",
+        "PLATFORM_PSN"
+      ],
+      "gameProperties": {
+        "serverMaxViewDistance": 500,
+        "serverMinGrassDistance": 50,
+        "networkViewDistance": 1500,
+        "disableThirdPerson": false,
+        "fastValidation": true,
+        "battlEye": true,
+        "VONDisableUI": false,
+        "VONDisableDirectSpeechUI": false,
+        "VONCanTransmitCrossFaction": false,
+        "missionHeader": {
+            "m_iControlPointsCap": 5,
+            "m_iStartingHQSupplies": 2000,
+            "m_bCustomBaseWhitelist": [
+                // HQs
+                {
+                    "m_sBaseName": "MilitaryHospital",
+                    "m_isControlPoint": 0,
+                    "m_bCanBeHQ": 1,
+                    "m_bDisableWhenUnusedAsHQ": 1,
+                    "m_fRadioRange": -1
+                },
+                // Control Points
+                {
+                    "m_sBaseName": "MajorBaseLamentin",
+                    "m_isControlPoint": 1,
+                    "m_bCanBeHQ": 0,
+                    "m_bDisableWhenUnusedAsHQ": 1,
+                    "m_fRadioRange": -1
+                },
+                // Bases
+                {
+                    "m_sBaseName": "SmallBaseSimonsWood",
+                    "m_isControlPoint": 1,
+                    "m_bCanBeHQ": 0,
+                    "m_bDisableWhenUnusedAsHQ": 1,
+                    "m_fRadioRange": -1
+                }
+            ]
+        }
+      },
+      "mods": []
+    },
+    "a2s": {
+      "address": "0.0.0.0",
+      "port": 19691
+    },
+    "rcon": {
+      "address": "0.0.0.0",
+      "port": 19999,
+      "password": "ChangeMe",
+      "permission": "monitor",
+      "blacklist": [],
+      "whitelist": []
+    },
+    "operating": {
+      "joinQueue": {
+        "maxSize": 20
+      }
+    }
+  }
+  

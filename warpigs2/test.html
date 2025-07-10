@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base Configuration JSON Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+        }
+        
+        /* Left side styles */
+        .left-panel {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        .header {
+            margin-bottom: 20px;
+        }
+        
+        #elements-container {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+        /* Right side styles */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid #ccc;
+            height: 100vh;
+        }
+        
+        /* Tab styles */
+        .tabs {
+            display: flex;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+        }
+        
+        .tab.active {
+            background-color: white;
+            border-bottom: 2px solid #4CAF50;
+        }
+        
+        .tab-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 20px;
+        }
+        
+        #output-area {
+            flex: 1;
+            width: 100%;
+            font-family: monospace;
+            resize: none;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        
+        /* Element styles */
+        .element-container {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        
+        .element-header {
+            background-color: #f0f0f0;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .element-enable {
+            margin: 0;
+            padding: 0;
+            transform: scale(1.8);
+        }
+        
+        .element-content {
+            padding: 15px;
+            display: none;
+        }
+        
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .input-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .show {
+            display: block !important;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        input[type="number"] {
+            width: 100px;
+        }
+        
+        #filename {
+            padding: 8px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        
+        .button-group {
+            margin-top: 10px;
+        }
+        
+        /* Toggle switch styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 22px;
+            margin: 0 10px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #f44336;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(28px);
+        }
+        
+        .exclude-label {
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Panel -->
+    <div class="left-panel">
+        <div class="header">
+            <h1>Base Configuration JSON Generator</h1>
+            <div>
+                <label for="filename">Output Filename:</label>
+                <input type="text" id="filename" value="base_config.json">
+                <button id="download-btn">Download JSON</button>
+            </div>
+        </div>
+        
+        <div id="elements-container">
+            <!-- Elements will be added here dynamically -->
+        </div>
+    </div>
+    
+    <!-- Right Panel -->
+    <div class="right-panel">
+        <div class="tabs">
+            <div class="tab active" data-tab="json">JSON</div>
+            <!-- Additional tabs can be added here -->
+        </div>
+        
+        <div class="tab-content" id="json-tab">
+            <textarea id="output-area" readonly></textarea>
+        </div>
+        <!-- Additional tab contents can be added here -->
+    </div>
+    
+    <script>
+        const baseNames = [
+            ["TownBaseChotain", "Chotain"],
+            ["TownBaseDuras", "Duras"],
+            ["TownBaseEntre_Deux", "Entre Deux"],
+            ["TownBaseFigari", "Figari"],
+            ["TownBaseGravette", "Gravette"],
+            ["TownBaseKermovan", "Kermovan"],
+            ["TownBaseLaruns", "Laruns"],
+            ["TownBaseLe_Moule", "Le Moule"],
+            ["TownBaseLevie", "Levie"],
+            ["TownBaseMeaux", "Meaux"],
+            ["TownBaseMontignac", "Montignac"],
+            ["TownBaseProvins", "Provins"],
+            ["TownBaseRegina", "Regina"],
+            ["TownBaseTyrone", "Tyrone"],
+            ["TownBaseVernon", "Vernon"],
+            ["TownBaseVileneuf", "Vileneuf"],
+            ["MainBaseNorth", "Saint-Philippe"],
+            ["MainBaseSouth", "Saint Pierre"],
+            ["MajorBaseChotain", "Coastal Base Chotain"],
+            ["MajorBaseLamentin", "Coastal Base Lamentin"],
+            ["MajorBaseMorton", "Coastal Base Morton"],
+            ["MilitaryBaseAirfield", "Airbase Saint-Philippe"],
+            ["MilitaryBaseLevie", "Military Base Levie"],
+            ["MilitaryBaseVilleneuf", "Calvary Hill"],
+            ["MilitaryHospital", "Military Hill"],
+            ["Relay15", "Relay Entre Deux"],
+            ["Relay4", "Relay South"],
+            ["SmallBaseAndresBeacon", "Andre's Beacon"],
+            ["SmallBaseBlackLake", "Black Lake"],
+            ["SmallBaseGoatbay", "Camurac"],
+            ["SmallBaseHornbeamValley", "Hornbeam Valley"],
+            ["SmallBaseLake", "Pinewood Lake"],
+            ["SmallBaseMaidensBay", "Military Depot"],
+            ["SmallBaseMine", "Quarry"],
+            ["SmallBasePennantsPass", "Pennants Pass"],
+            ["SmallBaseRichemont", "Richemont"],
+            ["SmallBaseShepherds", "Old Wood"],
+            ["SmallBaseSimonsWood", "Simon's Wood"],
+            ["SmallBaseTillersFind", "Tiller's Find"],
+            ["StartingPos01", "Spawn 01 - West of Kermovan (1)"],
+            ["StartingPos02", "Spawn 02 - Between Le Moule and Old Wood"],
+            ["StartingPos03", "Spawn 03 - Between Provins and Simon's Wood"],
+            ["StartingPos04", "Spawn 04 - South of Levie"],
+            ["StartingPos05", "Spawn 05 - North of Saint-Pierre"],
+            ["StartingPos06", "Spawn 06 - West of Kermovan (2)"],
+            ["StartingPos07", "Spawn 07 - North of Quarry"],
+            ["StartingPos08", "Spawn 08 - West of Kermocvan (3)"],
+            ["StartingPos09", "Spawn 09 - South of Chotain Military"],
+            ["StartingPos10", "Spawn 10 - North of Chotain Military"],
+            ["StartingPos11", "Spawn 11 - North of Hornbeam Valley"],
+            ["StartingPos12", "Spawn 12 - East of Saint-Philippe"],
+            ["StartingPos13", "Spawn 13 - West of Airbase"],
+            ["StartingPos14", "Spawn 14 - North of Military Hospital"],
+            ["StartingPos15", "Spawn 15 - North of Villeneuve"],
+            ["StartingPos16", "Spawn 16 - North of Lamentin"],
+            ["StartingPos17", "Spawn 17 - North of Le Moule"],
+            ["StartingPos18", "Spawn 18 - South of Le Moule"],
+            ["StartingPos19", "Spawn 19 - South-West of Old Wood"],
+            ["StartingPos20", "Spawn 20 - South of Calvary Hill"],
+            ["StartingPos21", "Spawn 21 - East of Morton"],
+            ["StartingPos23", "Spawn 23 - West of Chotain"],
+            ["StartingPos24", "Spawn 24 - West of Regina"],
+            ["StartingPos25", "Spawn 25 - South-East of Old Wood"],
+            ["StartingPos26", "Spawn 26 - North of Andre's Beacon"]
+        ];
+
+        // Create elements
+        const elementsContainer = document.getElementById('elements-container');
+        
+        baseNames.forEach((baseInfo, index) => {
+            const elementContainer = document.createElement('div');
+            elementContainer.className = 'element-container';
+            elementContainer.id = `element-${index}`;
+            
+            const elementHeader = document.createElement('div');
+            elementHeader.className = 'element-header';
+            
+            const title = document.createElement('span');
+            title.textContent = baseInfo[1];
+            
+            const enableCheckbox = document.createElement('input');
+            enableCheckbox.type = 'checkbox';
+            enableCheckbox.id = `enable-${index}`;
+            enableCheckbox.className = 'element-enable';
+            enableCheckbox.addEventListener('click', (e) => {
+                generateJSON();
+            });
+            
+            elementHeader.appendChild(title);
+            elementHeader.appendChild(enableCheckbox);
+            
+            const elementContent = document.createElement('div');
+            elementContent.className = 'element-content';
+            
+            // Create rows for each setting with their own exclude toggle
+            
+            // 1. Is Control Point
+            const controlRow = document.createElement('div');
+            controlRow.className = 'input-row';
+            
+            const controlCheckboxContainer = document.createElement('div');
+            controlCheckboxContainer.className = 'checkbox-container';
+            controlCheckboxContainer.innerHTML = `
+                <input type="checkbox" id="control-${index}">
+                <label for="control-${index}">Is Control Point</label>
+            `;
+            
+            const controlExcludeContainer = createExcludeToggle(`control-exclude-${index}`);
+            
+            controlRow.appendChild(controlCheckboxContainer);
+            controlRow.appendChild(controlExcludeContainer);
+            elementContent.appendChild(controlRow);
+            
+            // 2. Can Be HQ
+            const hqRow = document.createElement('div');
+            hqRow.className = 'input-row';
+            
+            const hqCheckboxContainer = document.createElement('div');
+            hqCheckboxContainer.className = 'checkbox-container';
+            hqCheckboxContainer.innerHTML = `
+                <input type="checkbox" id="hq-${index}">
+                <label for="hq-${index}">Can Be HQ</label>
+            `;
+            
+            const hqExcludeContainer = createExcludeToggle(`hq-exclude-${index}`);
+            
+            hqRow.appendChild(hqCheckboxContainer);
+            hqRow.appendChild(hqExcludeContainer);
+            elementContent.appendChild(hqRow);
+            
+            // 3. Disable When Unused As HQ
+            const disableRow = document.createElement('div');
+            disableRow.className = 'input-row';
+            
+            const disableCheckboxContainer = document.createElement('div');
+            disableCheckboxContainer.className = 'checkbox-container';
+            disableCheckboxContainer.innerHTML = `
+                <input type="checkbox" id="disable-${index}">
+                <label for="disable-${index}">Disable When Unused As HQ</label>
+            `;
+            
+            const disableExcludeContainer = createExcludeToggle(`disable-exclude-${index}`);
+            
+            disableRow.appendChild(disableCheckboxContainer);
+            disableRow.appendChild(disableExcludeContainer);
+            elementContent.appendChild(disableRow);
+            
+            // 4. Radio Range
+            const rangeRow = document.createElement('div');
+            rangeRow.className = 'input-row';
+            
+            const rangeInputContainer = document.createElement('div');
+            rangeInputContainer.className = 'input-container';
+            rangeInputContainer.innerHTML = `
+                <label for="range-${index}">Radio Range:</label>
+                <input type="number" id="range-${index}" step="0.1" value="2000">
+            `;
+            
+            const rangeExcludeContainer = createExcludeToggle(`range-exclude-${index}`);
+            
+            rangeRow.appendChild(rangeInputContainer);
+            rangeRow.appendChild(rangeExcludeContainer);
+            elementContent.appendChild(rangeRow);
+            
+            elementContainer.appendChild(elementHeader);
+            elementContainer.appendChild(elementContent);
+            
+            elementsContainer.appendChild(elementContainer);
+            
+            // Add click event to toggle content
+            elementHeader.addEventListener('click', (e) => {
+                if (e.target !== enableCheckbox) {
+                    elementContent.classList.toggle('show');
+                }
+            });
+            
+            // Add change event listeners to exclude toggles
+            document.getElementById(`control-exclude-${index}`).addEventListener('change', function() {
+                const checkbox = document.getElementById(`control-${index}`);
+                checkbox.disabled = this.checked;
+                generateJSON();
+            });
+            
+            document.getElementById(`hq-exclude-${index}`).addEventListener('change', function() {
+                const checkbox = document.getElementById(`hq-${index}`);
+                checkbox.disabled = this.checked;
+                generateJSON();
+            });
+            
+            document.getElementById(`disable-exclude-${index}`).addEventListener('change', function() {
+                const checkbox = document.getElementById(`disable-${index}`);
+                checkbox.disabled = this.checked;
+                generateJSON();
+            });
+            
+            document.getElementById(`range-exclude-${index}`).addEventListener('change', function() {
+                const input = document.getElementById(`range-${index}`);
+                input.disabled = this.checked;
+                generateJSON();
+            });
+        });
+        
+        // Helper function to create exclude toggle
+        function createExcludeToggle(id) {
+            const container = document.createElement('div');
+            container.className = 'exclude-container';
+            
+            const label = document.createElement('label');
+            label.className = 'switch';
+            
+            const toggle = document.createElement('input');
+            toggle.type = 'checkbox';
+            toggle.id = id;
+            
+            const slider = document.createElement('span');
+            slider.className = 'slider';
+            
+            label.appendChild(toggle);
+            label.appendChild(slider);
+            
+            const textLabel = document.createElement('span');
+            textLabel.className = 'exclude-label';
+            textLabel.textContent = 'Exclude (-1)';
+            
+            container.appendChild(textLabel);
+            container.appendChild(label);
+            
+            return container;
+        }
+        
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabId = tab.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                document.getElementById(`${tabId}-tab`).style.display = 'flex';
+            });
+        });
+        
+        // Generate JSON function
+        document.getElementById('download-btn').addEventListener('click', downloadJSON);
+        
+        function generateJSON() {
+            const result = [];
+            
+            baseNames.forEach((baseInfo, index) => {
+                baseName = baseInfo[0]
+                const enableCheckbox = document.getElementById(`enable-${index}`);
+                
+                if (enableCheckbox.checked) {
+                    // Get the checkboxes and their exclude toggles
+                    const controlCheckbox = document.getElementById(`control-${index}`);
+                    const controlExclude = document.getElementById(`control-exclude-${index}`);
+                    
+                    const hqCheckbox = document.getElementById(`hq-${index}`);
+                    const hqExclude = document.getElementById(`hq-exclude-${index}`);
+                    
+                    const disableCheckbox = document.getElementById(`disable-${index}`);
+                    const disableExclude = document.getElementById(`disable-exclude-${index}`);
+                    
+                    const rangeInput = document.getElementById(`range-${index}`);
+                    const rangeExclude = document.getElementById(`range-exclude-${index}`);
+                    
+                    // Create the item object
+                    const item = {
+                        m_sBaseName: baseName,
+                        m_bIsControlPoint: controlExclude.checked ? -1 : (controlCheckbox.checked ? 1 : 0),
+                        m_bCanBeHQ: hqExclude.checked ? -1 : (hqCheckbox.checked ? 1 : 0),
+                        m_bDisableWhenUnusedAsHQ: disableExclude.checked ? -1 : (disableCheckbox.checked ? 1 : 0),
+                        m_fRadioRange: rangeExclude.checked ? -1 : parseFloat(rangeInput.value)
+                    };
+                    
+                    result.push(item);
+                }
+            });
+            
+            document.getElementById('output-area').value = JSON.stringify(result, null, 2);
+        }
+        
+        function downloadJSON() {
+            const jsonContent = document.getElementById('output-area').value;
+            if (!jsonContent) {
+                alert('Please generate JSON first');
+                return;
+            }
+            
+            const filename = document.getElementById('filename').value || 'base_config.json';
+            const blob = new Blob([jsonContent], { type: 'application/json' });
+            const link = document.createElement('a');
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            
+            URL.revokeObjectURL(link.href);
+        }
+    </script>
+</body>
+</html>

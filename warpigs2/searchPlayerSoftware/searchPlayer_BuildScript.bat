@@ -1,0 +1,1 @@
+pyinstaller --onefile --noconsole --add-binary "C:\Users\BAXEN-Desktop\AppData\Local\Programs\Python\Python313\python.exe:." filename

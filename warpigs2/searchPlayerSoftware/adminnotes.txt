@@ -1,0 +1,95 @@
+from pathlib import Path
+import json
+
+settings_path: Path = Path.home() / "AppDate" / "Local" / "WarpigsSearchPlayer" / "settings.json"
+
+name = ""
+username = "" # lower case no space
+password = ""
+create_admin_query = """
+CREATE ROLE {username} NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT LOGIN NOREPLICATION NOBYPASSRLS PASSWORD '{password}';
+GRANT USAGE ON SCHEMA public TO {username};
+GRANT SELECT ON TABLE public."Players" TO {username};
+GRANT SELECT ON TABLE public."PlayerBans" TO {username};
+GRANT SELECT ON TABLE public."GameServers" TO {username};
+GRANT SELECT ON TABLE public."GameServerConnections" TO {username};
+GRANT SELECT ON TABLE public."Admins" TO {username};
+GRANT SELECT ON TABLE public."AdminActions" TO {username};
+GRANT INSERT ON TABLE public."AdminActions" TO {username};
+GRANT USAGE ON SEQUENCE public."AdminActions_id_seq" TO {username};
+
+INSERT INTO "Admins" ("name", "username") VALUES ('{name}', '{username}');
+"""
+sql = """
+CREATE OR REPLACE FUNCTION public.create_admin_user(
+    p_username TEXT,
+    p_password TEXT,
+    p_name TEXT
+) RETURNS void AS $$
+DECLARE
+    create_role_sql TEXT;
+BEGIN
+    -- Step 1: Create role with specific permissions
+    create_role_sql := format(
+        'CREATE ROLE %I NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT LOGIN NOREPLICATION NOBYPASSRLS PASSWORD %L;',
+        p_username, p_password
+    );
+    EXECUTE create_role_sql;
+
+    -- Step 2: Grant schema usage
+    EXECUTE format('GRANT USAGE ON SCHEMA public TO %I;', p_username);
+
+    -- Step 3: Grant table access
+    EXECUTE format('GRANT SELECT ON public."Players" TO %I;', p_username);
+    EXECUTE format('GRANT SELECT ON public."PlayerBans" TO %I;', p_username);
+    EXECUTE format('GRANT SELECT ON public."GameServers" TO %I;', p_username);
+    EXECUTE format('GRANT SELECT ON public."GameServerConnections" TO %I;', p_username);
+    EXECUTE format('GRANT SELECT ON public."Admins" TO %I;', p_username);
+    EXECUTE format('GRANT SELECT, INSERT ON public."AdminActions" TO %I;', p_username);
+    EXECUTE format('GRANT USAGE ON SEQUENCE public."AdminActions_id_seq" TO %I;', p_username);
+
+    -- Step 4: Insert admin record
+    EXECUTE format(
+        'INSERT INTO public."Admins" ("name", "username") VALUES (%L, %L);',
+        p_name, p_username
+    );
+    EXECUTE format()
+END;
+"""
+
+disable_admin_query = """
+update "Admins" set "username" = 'disabled' where "username" = '{username}';
+drop role if exists "{username}";
+"""
+sql = """
+CREATE OR REPLACE FUNCTION public.disable_admin_user(p_username TEXT)
+RETURNS void AS $$
+DECLARE
+    drop_role_sql TEXT;
+BEGIN
+    -- Step 1: Update the Admins table
+    UPDATE public."Admins"
+    SET "username" = 'disabled'
+    WHERE "username" = p_username;
+
+    -- Step 2: Dynamically drop the PostgreSQL role
+    drop_role_sql := format('DROP ROLE IF EXISTS %I;', p_username);
+    EXECUTE drop_role_sql;
+END;
+"""
+
+DB_CONFIG = {
+    "dbname": "armaReforger",
+    "user": "adminManager",
+    "password": "01923jmalskdmp0910349ujlkfnmspa09uq45lhjnn5j9r0jsd0p9joqi4j0p932404ui32",
+    "host": "148.113.163.200",
+    "port": "35432"
+}
+
+DB_CONFIG = {
+    "dbname": "armaReforger",
+    "user": "warpigsBot",
+    "password": "b8y109h7bn3jn132loijnas0d9nu1920u3418974hnkasdmlj01u4nh917n4iasd01827h4319u4n1iojpn40987ahsdoipnd1n4ol1n2409j14jasdklm01234132asdfpfsdu7832h4unbsadfplkinbsdf09897234",
+    "host": "148.113.163.200",
+    "port": "35432"
+}
