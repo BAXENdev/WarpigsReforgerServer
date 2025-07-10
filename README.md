@@ -14,25 +14,25 @@ echo "deb http://http.us.debian.org/debian stable main contrib non-free" | sudo 
 
 Update the server
 ```sh
-sudo apt update
-sudo apt upgrade
-sudo apt-get update
-sudo apt-get upgrade
+sudo apt update;
+sudo apt upgrade;
+sudo apt-get update;
+sudo apt-get upgrade;
 ```
 
-### Setup armaServer User
-Create armaServer user
+### Setup gameServer User
+Create gameServer user
 ```sh
-sudo adduser --allow-bad-names armaServer
-sudo usermod -aG sudo armaServer
+sudo adduser --allow-bad-names gameServer
+sudo usermod -aG sudo gameServer
 ```
 
-**Logout and login into armaServer**
+**Logout and login into gameServer**
 Download git repo
 ```sh
 cd
 sudo apt install git
-sudo git clone https://github.com/BAXENdev/WarpigsReforgerServer /home/armaServer/armaReforgerServer
+sudo git clone https://github.com/BAXENdev/WarpigsReforgerServer /home/gameServer/armaReforgerServer
 ```
 
 ### Install Docker
@@ -62,7 +62,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 
 Build server image
 ```sh
-cd /home/armaServer/armaReforgerServer/docker/bax-arma-reforger-server
+cd /home/gameServer/armaReforgerServer/docker/bax-arma-reforger-server
 sudo bash build.sh
 ```
 
@@ -97,9 +97,9 @@ sudo iptables -A DOCKER-USER -p udp --dport 18000:18100 -j ACCEPT
 ### Add Server Commands
 Adds server commands to bash
 ```sh
-echo "alias startServer='sudo docker compose -f /home/armaServer/armaReforgerServer/docker/Servers/docker-compose.yaml up -d'" | sudo tee -a /etc/bash.bashrc;
-echo "alias stopServer='sudo docker compose -f /home/armaServer/armaReforgerServer/docker/Servers/docker-compose.yaml down'" | sudo tee -a /etc/bash.bashrc;
-echo "alias modifyCompose='sudo nano /home/armaServer/armaReforgerServer/docker/Servers/docker-compose.yaml'" | sudo tee -a /etc/bash.bashrc
+echo "alias startServer='sudo docker compose -f /home/gameServer/armaReforgerServer/docker/Servers/docker-compose.yaml up -d'" | sudo tee -a /etc/bash.bashrc;
+echo "alias stopServer='sudo docker compose -f /home/gameServer/armaReforgerServer/docker/Servers/docker-compose.yaml down'" | sudo tee -a /etc/bash.bashrc;
+echo "alias modifyCompose='sudo nano /home/gameServer/armaReforgerServer/docker/Servers/docker-compose.yaml'" | sudo tee -a /etc/bash.bashrc
 echo "alias updateArma='steamcmd +login anonymous +app_update 1874900 validate +exit'" | sudo tee -a /etc/bash.bashrc
 ```
 
@@ -108,11 +108,11 @@ echo "alias updateArma='steamcmd +login anonymous +app_update 1874900 validate +
 | startServer | Starts the arma servers listed in the docker compose |
 | stopServer | Stops the arma servers |
 | modifyCompose | Open the docker compose file that lists the arma server |
-| updateArma | Updates the arma server files. when running this command, make sure to sign into armaServer |
+| updateArma | Updates the arma server files. when running this command, make sure to sign into gameServer |
 
 ### Modify the Profile Config
 ```sh
-sudo nano /home/armaServer/armaReforgerServer/profiles/server1/config.json
+sudo nano /home/gameServer/armaReforgerServer/profiles/server1/config.json
 ```
 * Change ip address for `publicAddress`
 * Increment the ports
@@ -123,22 +123,22 @@ sudo nano /home/armaServer/armaReforgerServer/profiles/server1/config.json
 
 If you would like to change the folder name of the profile:
 ```sh
-cd /home/armaServer/armaReforgerServer/profiles
+cd /home/gameServer/armaReforgerServer/profiles
 mv server1 newProfileName
-sudo nano /home/armaServer/armaReforgerServer/docker/Servers/docker-compose.yaml
+sudo nano /home/gameServer/armaReforgerServer/docker/Servers/docker-compose.yaml
 ```
 * Update `server1` to your new profile name in the second volume listing
 ```yaml
 # In the second listing, change server1 to your new profile name
     volumes:
-      - /home/armaServer/armaReforgerServer/workshop:/home/reforger/workshop
-      - /home/armaServer/armaReforgerServer/profiles/server1:/home/reforger/profile
-      - /home/armaServer/.steam/steam/steamapps/common/Arma\ Reforger\ Server:/home/reforger/gameFiles
+      - /home/gameServer/armaReforgerServer/workshop:/home/reforger/workshop
+      - /home/gameServer/armaReforgerServer/profiles/server1:/home/reforger/profile
+      - /home/gameServer/.steam/steam/steamapps/common/Arma\ Reforger\ Server:/home/reforger/gameFiles
 # to 
     volumes:
-      - /home/armaServer/armaReforgerServer/workshop:/home/reforger/workshop
-      - /home/armaServer/armaReforgerServer/profiles/newProfileName:/home/reforger/profile
-      - /home/armaServer/.steam/steam/steamapps/common/Arma\ Reforger\ Server:/home/reforger/gameFiles
+      - /home/gameServer/armaReforgerServer/workshop:/home/reforger/workshop
+      - /home/gameServer/armaReforgerServer/profiles/newProfileName:/home/reforger/profile
+      - /home/gameServer/.steam/steam/steamapps/common/Arma\ Reforger\ Server:/home/reforger/gameFiles
 ```
 
 ## Creating a New Server Instance
